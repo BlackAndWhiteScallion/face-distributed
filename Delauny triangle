@@ -114,3 +114,7 @@ output_video.release()
 cv2.destroyAllWindows()
 
 make sure to replace 'shape_predictor_68_face_landmarks.dat' with the correct path to the pre-trained face landmarks model (shape_predictor_68_face_landmarks.dat).
+
+# tutorial for opencv use: 
+https://techtutorialsx.com/2021/04/29/python-opencv-splitting-video-frames/
+https://theailearner.com/2018/10/15/creating-video-from-images-using-opencv-python/
