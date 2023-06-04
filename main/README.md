@@ -33,7 +33,7 @@ delaunay triangulation, etc.
 To run face detection and analysis for example for <i>Luis.jpg</i> photo, call ```delaunay.py``` as follows:
 
 ```bash
-python delaunay.py --image Luis.jpg 
+python delaunay.py --image Luis.jpg --filename Luis1.jpg
 ```
 
 Also, you can change script behavior using different flags:
