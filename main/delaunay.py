@@ -102,7 +102,7 @@ def delaunay_triangulation(img, points):
     # Draw delaunay triangles
     draw_delaunay(img, subdiv, delaunay_color)
     # Show results
-    cv2.imshow(win_delaunay, img)
+    #cv2.imshow(win_delaunay, img)
 
     # Draw points
     if draw_landmarks:
@@ -110,7 +110,7 @@ def delaunay_triangulation(img, points):
             draw_point(img, p, points_color)
 
     # Show results
-    cv2.waitKey(0)
+    #cv2.waitKey(0)
 
     return img
 
@@ -134,10 +134,10 @@ def main():
     # Draw face Bounding box
 
     # If l28 only use 28 of the 68 landmarks provided by dlib shape-predictor
-    l28 = args.l28
-    if l28:
-        mask = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 22, 23, 25, 27, 29, 30, 31, 35, 36, 39, 42, 45, 48, 51, 54, 57]
-        landmarks = [landmarks[i] for i in mask]
+    #l28 = args.l28
+    #if l28:
+    #    mask = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 22, 23, 25, 27, 29, 30, 31, 35, 36, 39, 42, 45, 48, 51, 54, 57]
+    #    landmarks = [landmarks[i] for i in mask]
 
     # Compute and draw triangulation
     img_delaunay = delaunay_triangulation(img, landmarks)
@@ -145,14 +145,15 @@ def main():
     # Save results in files
     # file_name = os.path.splitext(img_path)[0]
     # file_extension = os.path.splitext(img_path)[1]
-    cv2.imwrite('delaunay.jpg', img_delaunay)
-
+    if not cv2.imwrite(args.filename, img_delaunay):
+        raise Exception("could not write image")
 
 if __name__ == '__main__':
     # Parse arguments
     parser = argparse.ArgumentParser(description='Process image for facial recognition analysis and visualization.')
     parser.add_argument('--image', help='image to process', required=True)
-    parser.add_argument('--l28', action='store_true', help='only use 28 landmarks', required=False)
+    #parser.add_argument('--l28', action='store_true', help='only use 28 landmarks', required=False)
+    parser.add_argument('--filename', help='filename to save to', required=True)
     args = parser.parse_args()
 
     # Call main function
