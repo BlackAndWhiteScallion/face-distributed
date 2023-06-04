@@ -36,9 +36,9 @@ def draw_delaunay(img, subdiv, delaunay_color):
 
     for t in triangle_list:
 
-        pt1 = (t[0], t[1])
-        pt2 = (t[2], t[3])
-        pt3 = (t[4], t[5])
+        pt1 = (int(t[0]), int(t[1]))
+        pt2 = (int(t[2]), int(t[3]))
+        pt3 = (int(t[4]), int(t[5]))
 
         if rect_contains(r, pt1) and rect_contains(r, pt2) and rect_contains(r, pt3):
             cv2.line(img, pt1, pt2, delaunay_color, 1, cv2.LINE_AA, 0)
@@ -64,15 +64,14 @@ def draw_voronoi(img, subdiv):
         cv2.circle(img, (centers[i][0], centers[i][1]), 3, (0, 0, 0), cv2.FILLED, cv2.LINE_AA, 0)
 
 
-def delaunay_triangulation(img, points, voronoi=True):
+def delaunay_triangulation(img, points):
     # Define window names
     win_delaunay = "Delaunay Triangulation"
-    win_voronoi = "Voronoi Diagram"
 
     # Turn on animation while drawing triangles
-    animate = True
+    animate = False
     # Turn off landmark drawing
-    draw_landmarks = False
+    draw_landmarks = True
 
     # Define colors for drawing.
     delaunay_color = (255, 255, 255)
@@ -110,20 +109,10 @@ def delaunay_triangulation(img, points, voronoi=True):
         for p in points:
             draw_point(img, p, points_color)
 
-    # Allocate space for voronoi Diagram
-    img_voronoi = np.zeros(img.shape, dtype=img.dtype)
-
-    # Draw voronoi
-    if voronoi:
-        # Draw voronoi diagram
-        draw_voronoi(img_voronoi, subdiv)
-        # Show results
-        cv2.imshow(win_voronoi, img_voronoi)
-
     # Show results
     cv2.waitKey(0)
 
-    return img, img_voronoi
+    return img
 
 
 def main():
@@ -151,25 +140,18 @@ def main():
         landmarks = [landmarks[i] for i in mask]
 
     # Compute and draw triangulation
-    img_delaunay, img_voronoi = delaunay_triangulation(img, landmarks, args.voronoi)
+    img_delaunay = delaunay_triangulation(img, landmarks)
 
     # Save results in files
-    if args.save:
-        file_name = os.path.splitext(img_path)[0]
-        file_extension = os.path.splitext(img_path)[1]
-        cv2.imwrite(f'{file_name}_delaunay{file_extension}', img_delaunay)
-
-        if args.voronoi:
-            cv2.imwrite(f'{file_name}_voronoi{file_extension}', img_voronoi)
+    # file_name = os.path.splitext(img_path)[0]
+    # file_extension = os.path.splitext(img_path)[1]
+    cv2.imwrite('delaunay.jpg', img_delaunay)
 
 
 if __name__ == '__main__':
     # Parse arguments
     parser = argparse.ArgumentParser(description='Process image for facial recognition analysis and visualization.')
     parser.add_argument('--image', help='image to process', required=True)
-    parser.add_argument('--voronoi', action='store_true', help='show voronoi diagrams of recognized face',
-                        required=False)
-    parser.add_argument('--save', action='store_true', help='save results in separate files', required=False)
     parser.add_argument('--l28', action='store_true', help='only use 28 landmarks', required=False)
     args = parser.parse_args()
 

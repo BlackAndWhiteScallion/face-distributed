@@ -19,6 +19,7 @@ imutils==0.5.4
 ```
 
 You can run ```pip install``` to install all the dependencies at once or install it one by one. This process may take a few minutes.
+if dlib does not install, run ```sudo apt install cmake``` first
 
 ```bash
 pip install -r requirements.txt

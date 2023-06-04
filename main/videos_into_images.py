@@ -1,29 +1,17 @@
 import cv2
-import mediapipe
- 
-drawingModule = mediapipe.solutions.drawing_utils
-handsModule = mediapipe.solutions.hands
- 
-capture = cv2.VideoCapture('C:/Users/N/Desktop/video.avi')
+
+capture = cv2.VideoCapture('/home/student/Downloads/face-distributed-main/main/500_00277_preview.mp4')
  
 frameNr = 0
  
-with handsModule.Hands() as hands:
- 
-    while (True):
+while (True):
  
         success, frame = capture.read()
  
         if not success:
             break
  
-        results = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
- 
-        if results.multi_hand_landmarks != None:
-            for handLandmarks in results.multi_hand_landmarks:
-                drawingModule.draw_landmarks(frame, handLandmarks, handsModule.HAND_CONNECTIONS)
- 
-        cv2.imwrite(f'C:/Users/N/Desktop/output/frame_{frameNr}.jpg', frame)
+        cv2.imwrite(f'/home/student/Downloads/face-distributed-main/main/output/{frameNr}.jpg', frame)
  
         frameNr = frameNr+1
  
