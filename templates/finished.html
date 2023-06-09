@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Face Recognition Video Processing</title>
+</head>
+<style>
+  body {
+    background-image: url("image.jpg");
+    background-repeat: no-repeat;
+    background-size: 1500px 1500px;
+    background-position: center;
+  }
+</style>
+<body>
+  <h1>Face Recongition Video Processing</h1>
+
+  <form action="/process" method="post" enctype="multipart/form-data">
+    <input type="file" name="selfieVideo" accept="video/*" />
+    <input type="submit" value="Upload" />
+  </form>
+    
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+  <p class="important">
+    Video rendering finished.
+  </p>
+{% block head %}
+{% if filename %}
+	<div style="margin: 10px auto;">
+		<video autoplay="autoplay" controls="controls" preload="preload">
+            <source src="{{url_for('display_video', filename=filename)}}" type="video/mp4"></source>
+		</video>
+	</div>
+ {{filename}}
+    <a class="btn btn-success" href="{{url_for('download', filename=filename)}}">Download</a>
+{% endif %}
+{% endblock %}
+{% if data %}
+    <h1>Table for worker progress</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Worker ID</th>
+                <th>Video ID</th>
+                <th>Send Time</th>
+                <th>Receive Time</th>
+                <th>Frame Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+</html>
+
+

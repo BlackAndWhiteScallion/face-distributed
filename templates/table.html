@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table with PostgreSQL Data</title>
+</head>
+<body>
+    <h1>Table with PostgreSQL Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Worker ID</th>
+                <th>Video ID</th>
+                <th>Send Time</th>
+                <th>Receive Time</th>
+                <th>Frame Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
